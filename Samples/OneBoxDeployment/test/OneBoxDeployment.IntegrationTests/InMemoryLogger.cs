@@ -144,7 +144,7 @@ namespace OneBoxDeployment.IntegrationTests
             /// <summary>
             /// Log message.
             /// </summary>
-            /// <typeparam name="TState"The log state type.></typeparam>
+            /// <typeparam name="TState">The log state type.</typeparam>
             /// <param name="logLevel">The log level.</param>
             /// <param name="eventId">The event identifier.</param>
             /// <param name="state">The logging state.</param>

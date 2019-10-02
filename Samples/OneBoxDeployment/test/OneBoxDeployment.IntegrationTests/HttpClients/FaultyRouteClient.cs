@@ -27,7 +27,7 @@ namespace OneBoxDeployment.IntegrationTests.HttpClients
 
 
         /// <summary>
-        /// Call the faulty route as defined in <see cref="ConfigurationKeys.AlwaysFaultyRoute"/>.
+        /// Call the faulty route as defined in <see cref="Api.ConfigurationKeys.AlwaysFaultyRoute"/>.
         /// </summary>
         /// <param name="cancellation">The cancellation token.</param>
         /// <returns>The <see cref="HttpResponseMessage"/> for examination.</returns>

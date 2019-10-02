@@ -4,45 +4,15 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>4d9b4eb5-feb2-4788-a754-0186508ed49d</UserSecretsId>
 
     <!--
 	  <ApplicationInsightsResourceId>/subscriptions/aaa5b2f1-bbb3-cccf-b863-5ad2eb3554d8/resourcegroups/OneBoxDeployment/providers/microsoft.insights/components/EventAppInsight</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/aaa5b2f1-bbb3-ccc-b863-5ad2eb3554d8/resourcegroups/OneBoxDeployment/providers/microsoft.insights/components/EventAppInsight</ApplicationInsightsAnnotationResourceId>
     <UserSecretsId>68b6aba0-2245-49c9-9147-caeb44ac7dcb</UserSecretsId>
     -->
-    <Configurations>Debug;Release;Production</Configurations>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
-    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Calculates the revision number as described at https://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute.aspx. -->
-    <!-- The algorithm is described as "The default revision number is the number of seconds since midnight local time (without taking into account time zone adjustments for daylight saving time), divided by 2. -->
-    <SecondsSinceMidnight>$([System.DateTime]::Now.Subtract($([System.DateTime]::Now.Date)).TotalSeconds.ToString('#0'))</SecondsSinceMidnight>
-	  <BuildRevision>$([MSBuild]::Divide($(SecondsSinceMidnight), 2).ToString('#0'))</BuildRevision>
-    <FileVersion>0.0.0.1</FileVersion>
-    <AssemblyVersion>0.0.0.1</AssemblyVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningsAsErrors></WarningsAsErrors>
-    <NoWarn>1701;1702</NoWarn>
-  </PropertyGroup>
-
-   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-  </PropertyGroup>
-
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-     <WarningsAsErrors />
-   </PropertyGroup>
-
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Production|AnyCPU'">
-     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-     <WarningsAsErrors />
-   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\swagger.index.html" />
@@ -52,10 +22,6 @@
   <ItemGroup>
     <PackageReference Include="Ben.Demystifier" Version="0.1.4" />
     <PackageReference Include="DataAnnotationsValidator.NETCore" Version="1.0.3" />
-    <PackageReference Include="ErrorProne.NET.Structs" Version="$(ErrorProneNETStructsVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="IdentityServer4" Version="2.5.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
@@ -78,6 +44,7 @@
     <PackageReference Include="Microsoft.Orleans.Client" Version="2.4.2" />
     <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="2.4.2" />
     <PackageReference Include="Microsoft.Orleans.OrleansTelemetryConsumers.Counters" Version="2.4.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />

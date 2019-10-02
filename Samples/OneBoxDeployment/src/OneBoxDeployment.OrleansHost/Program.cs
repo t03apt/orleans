@@ -110,6 +110,7 @@ namespace OneBoxDeployment.OrleansHost
                 {
                     options.Invariant = clusterConfig.StorageConfigs[0].AdoNetConstant;
                     options.ConnectionString = clusterConfig.StorageConfigs[0].ConnectionString;
+                    options.UseJsonFormat = true;
                 });
 
             return siloBuilder.Build();

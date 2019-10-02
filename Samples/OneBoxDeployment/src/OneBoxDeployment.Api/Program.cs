@@ -83,8 +83,7 @@ namespace OneBoxDeployment.Api
                 })
                 .ConfigureLogging((hostingContext, loggingBuilder) =>
                 {
-                    var section = hostingContext.Configuration.GetSection("Serilog");
-                    var loggerConfiguration = new LoggerConfiguration().ReadFrom.ConfigurationSection(section);
+                    var loggerConfiguration = new LoggerConfiguration().ReadFrom.Configuration(hostingContext.Configuration, "Serilog");
                     var logger = loggerConfiguration.CreateLogger();
                     loggingBuilder.AddSerilog(logger);
 

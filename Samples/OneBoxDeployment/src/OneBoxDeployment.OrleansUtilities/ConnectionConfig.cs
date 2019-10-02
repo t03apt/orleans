@@ -2,6 +2,9 @@
 
 namespace OneBoxDeployment.OrleansUtilities
 {
+    /// <summary>
+    /// ConnectionConfig
+    /// </summary>
     [DebuggerDisplay("ConnectionConfig(Name = {Name}, ConnectionString = {ConnectionString}, AdoNetConstant = {AdoNetConstant})")]
     public sealed class ConnectionConfig
     {
