@@ -1,0 +1,76 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: oneboxdeploymentapi
+spec:
+  type: LoadBalancer
+  selector:
+    app: oneboxdeploymentapi
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: oneboxdeploymentapi
+  labels:
+    app: oneboxdeploymentapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oneboxdeploymentapi
+  template:
+    metadata:
+      labels:
+        app: oneboxdeploymentapi
+    spec:
+      containers:
+      - name: oneboxdeploymentapi
+        image: tpappacr.azurecr.io/oneboxdeploymentapi:latest
+        args: ["url=http://0.0.0.0:5000", "silohost=oneboxdeploymentorleanshost" ]
+        ports:
+        - containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: oneboxdeploymentorleanshost
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: oneboxdeploymentorleanshost
+  ports:
+  - protocol: TCP
+    port: 40000
+    targetPort: 40000
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: oneboxdeploymentorleanshost
+spec:
+  selector:
+    matchLabels:
+      app: oneboxdeploymentorleanshost
+  serviceName: oneboxdeploymentorleanshost
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oneboxdeploymentorleanshost
+    spec:
+      containers:
+      - name: oneboxdeploymentorleanshost
+        image: tpappacr.azurecr.io/oneboxdeploymentorleanshost:latest
+        env:
+        - name: ClusterId
+          value: AKSCluster
+        ports:
+        - name: orleansgateway
+          containerPort: 40000
+        - name: orleansport
+          containerPort: 22222
