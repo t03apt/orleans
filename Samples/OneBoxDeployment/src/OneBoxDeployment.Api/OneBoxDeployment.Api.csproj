@@ -95,6 +95,9 @@
     <Content Update="appsettings.api.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="appsettings.api.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="appsettings.api.Production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>    
