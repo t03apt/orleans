@@ -33,6 +33,9 @@ spec:
         args: ["url=http://0.0.0.0:5000", "silohost=oneboxdeploymentorleanshost" ]
         ports:
         - containerPort: 5000
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
 ---
 kind: Service
 apiVersion: v1
@@ -67,8 +70,8 @@ spec:
       - name: oneboxdeploymentorleanshost
         image: tpappacr.azurecr.io/oneboxdeploymentorleanshost:latest
         env:
-        - name: ClusterId
-          value: AKSCluster
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
         ports:
         - name: orleansgateway
           containerPort: 40000
