@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:2.2-stretch-slim AS base
 WORKDIR /app
-EXPOSE 2222
-EXPOSE 4000
+EXPOSE 22222
+EXPOSE 40000
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src

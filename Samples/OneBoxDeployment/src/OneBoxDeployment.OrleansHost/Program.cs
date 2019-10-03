@@ -1,13 +1,12 @@
-using OneBoxDeployment.Grains;
-using OneBoxDeployment.OrleansUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using OneBoxDeployment.Grains;
+using OneBoxDeployment.OrleansUtilities;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Statistics;
 using System;
-using System.Net;
+using System.Net.Sockets;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +19,6 @@ namespace OneBoxDeployment.OrleansHost
     public static class Program
     {
         private static AutoResetEvent ProceedWithClosing = new AutoResetEvent(false);
-
 
         /// <summary>
         /// The main Orleans console host entry point.
@@ -75,7 +73,7 @@ namespace OneBoxDeployment.OrleansHost
                     logging.AddConsole();
                     logging.AddDebug();
                 })
-                .UsePerfCounterEnvironmentStatistics()
+                //.UsePerfCounterEnvironmentStatistics()
                 .Configure<ClusterOptions>(options =>
                 {
                     options.ClusterId = clusterConfig.ClusterOptions.ClusterId;
@@ -86,14 +84,15 @@ namespace OneBoxDeployment.OrleansHost
                     options.Invariant = clusterConfig.ConnectionConfig.AdoNetConstant;
                     options.ConnectionString = clusterConfig.ConnectionConfig.ConnectionString;
                 })
-                .Configure<EndpointOptions>(options =>
-                {
-                    options.AdvertisedIPAddress = clusterConfig.EndPointOptions.AdvertisedIPAddress ?? IPAddress.Loopback;
-                    options.GatewayListeningEndpoint = clusterConfig.EndPointOptions.GatewayListeningEndpoint;
-                    options.GatewayPort = clusterConfig.EndPointOptions.GatewayPort;
-                    options.SiloListeningEndpoint = clusterConfig.EndPointOptions.SiloListeningEndpoint;
-                    options.SiloPort = clusterConfig.EndPointOptions.SiloPort;
-                })
+                //.Configure<EndpointOptions>(options =>
+                //{
+                //    options.AdvertisedIPAddress = clusterConfig.EndPointOptions.AdvertisedIPAddress ?? IPAddress.Loopback;
+                //    options.GatewayListeningEndpoint = clusterConfig.EndPointOptions.GatewayListeningEndpoint;
+                //    options.GatewayPort = clusterConfig.EndPointOptions.GatewayPort;
+                //    options.SiloListeningEndpoint = clusterConfig.EndPointOptions.SiloListeningEndpoint;
+                //    options.SiloPort = clusterConfig.EndPointOptions.SiloPort;
+                //})
+                .ConfigureEndpoints(clusterConfig.EndPointOptions.SiloPort, clusterConfig.EndPointOptions.GatewayPort, AddressFamily.InterNetwork, true)
                 .Configure<SiloMessagingOptions>(options =>
                 {
                     options.ResponseTimeout = TimeSpan.FromSeconds(5);
